@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- Notification Box -->
+@if(count($notifications) > 0)
+    <x-notification-box :notifications="$notifications" />
+@endif
+
 <div class="container mx-auto px-4 py-8">
     <div class="mb-8 flex justify-between items-center">
         <div>

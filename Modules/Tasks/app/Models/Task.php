@@ -4,7 +4,6 @@ namespace Modules\Tasks\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Tasks\Database\Factories\TaskFactory;
 
 class Task extends Model
 {
@@ -28,10 +27,10 @@ class Task extends Model
         'due_date' => 'datetime',
     ];
 
-    // protected static function newFactory(): TaskFactory
-    // {
-    //     // return TaskFactory::new();
-    // }
+    public function reminders()
+    {
+        return $this->hasMany(\Modules\Reminders\Models\Reminder::class);
+    }
 
     /**
      * Get the user that owns the task

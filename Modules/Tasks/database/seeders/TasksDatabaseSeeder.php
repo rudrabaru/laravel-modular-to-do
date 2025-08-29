@@ -11,6 +11,10 @@ class TasksDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            UserSeeder::class,
+            TaskSeeder::class,
+            \Modules\Reminders\Database\Seeders\ReminderSeeder::class,
+        ]);
     }
 }

@@ -4,7 +4,6 @@ namespace Modules\Reminders\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-// use Modules\Reminders\Database\Factories\ReminderFactory;
 
 class Reminder extends Model
 {
@@ -16,10 +15,16 @@ class Reminder extends Model
     protected $fillable = [
         'task_id',
         'remind_at',
+        'read_at',
     ];
 
-    // protected static function newFactory(): ReminderFactory
-    // {
-    //     // return ReminderFactory::new();
-    // }
+    protected $casts = [
+        'remind_at' => 'datetime',
+        'read_at' => 'datetime',
+    ];
+
+    public function task()
+    {
+        return $this->belongsTo(\Modules\Tasks\Models\Task::class);
+    }
 }

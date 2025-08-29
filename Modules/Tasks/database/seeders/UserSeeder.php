@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     {
         if (!User::query()->where('email', 'admin@example.com')->exists()) {
             User::query()->create([
-                'name' => 'Admin',
+                'name' => 'Admin User',
                 'email' => 'admin@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'admin',
@@ -24,11 +24,16 @@ class UserSeeder extends Seeder
 
         if (!User::query()->where('email', 'user@example.com')->exists()) {
             User::query()->create([
-                'name' => 'User',
+                'name' => 'Regular User',
                 'email' => 'user@example.com',
                 'password' => Hash::make('password'),
                 'role' => 'user',
             ]);
         }
+
+        User::firstOrCreate(
+        ['email' => 'manan@gmail.com'],
+        ['name' => 'Manan', 'password' => Hash::make('password'), 'role' => 'user']
+        );
     }
 }

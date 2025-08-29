@@ -3,7 +3,6 @@
 namespace Modules\Dashboard\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\User;
 use Modules\Tasks\Models\Task;
 

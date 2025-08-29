@@ -16,6 +16,10 @@
         <input name="due_date" type="date" class="form-control" value="{{ old('due_date', isset($task->due_date) ? $task->due_date->format('Y-m-d') : '') }}" required>
     </div>
     <div class="mb-3 text-start">
+        <label class="form-label">Remind At (optional, must be before due date)</label>
+        <input name="remind_at" type="datetime-local" class="form-control" value="{{ old('remind_at', optional($task->reminders()->first())->remind_at ? optional($task->reminders()->first()->remind_at)->format('Y-m-d\TH:i') : '') }}">
+    </div>
+    <div class="mb-3 text-start">
         <label class="form-label">Status *</label>
         <select name="status" class="form-select" required>
             <option value="pending" @selected(old('status', $task->status ?? 'pending')==='pending')>Pending</option>
