@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,5 +45,29 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get all tasks for the user
+     */
+    public function tasks()
+    {
+        return $this->hasMany(\Modules\Tasks\Models\Task::class);
+    }
+
+    /**
+     * Get pending tasks for the user
+     */
+    public function pendingTasks()
+    {
+        return $this->hasMany(\Modules\Tasks\Models\Task::class)->where('status', 'pending');
+    }
+
+    /**
+     * Get completed tasks for the user
+     */
+    public function completedTasks()
+    {
+        return $this->hasMany(\Modules\Tasks\Models\Task::class)->where('status', 'completed');
     }
 }

@@ -15,6 +15,16 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @if(Auth::check() && Auth::user()->role === 'admin')
+                        <x-nav-link :href="route('admin.tasks.index')" :active="request()->routeIs('admin.tasks.*')">
+                            {{ __('View All Tasks') }}
+                        </x-nav-link>
+                    @endif
+                    @if(Auth::check() && Auth::user()->role === 'user')
+                        <x-nav-link :href="route('user.tasks.index')" :active="request()->routeIs('user.tasks.*')">
+                            {{ __('Manage Tasks') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -70,6 +80,16 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(Auth::check() && Auth::user()->role === 'admin')
+                <x-responsive-nav-link :href="route('admin.tasks.index')" :active="request()->routeIs('admin.tasks.*')">
+                    {{ __('View Tasks') }}
+                </x-responsive-nav-link>
+            @endif
+            @if(Auth::check() && Auth::user()->role === 'user')
+                <x-responsive-nav-link :href="route('user.tasks.index')" :active="request()->routeIs('user.tasks.*')">
+                    {{ __('Manage Tasks') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
