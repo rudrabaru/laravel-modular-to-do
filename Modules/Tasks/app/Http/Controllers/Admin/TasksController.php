@@ -31,6 +31,96 @@ class TasksController extends Controller
     }
 
     /**
+     * Show the form for creating a new task
+     */
+    public function create()
+    {
+        $users = User::orderBy('name')->get();
+        return view('tasks::admin.create', compact('users'));
+    }
+
+    /**
+     * Store a newly created task
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'user_id' => 'required|exists:users,id',
+            'due_date' => 'nullable|date|after:today',
+            'priority' => 'nullable|in:low,medium,high',
+        ]);
+
+        Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'due_date' => $request->due_date,
+            'priority' => $request->priority ?? 'medium',
+            'status' => 'pending',
+        ]);
+
+        return redirect()->route('admin.tasks.index')
+            ->with('success', 'Task created successfully.');
+    }
+
+    /**
+     * Display the specified task
+     */
+    public function show(Task $task)
+    {
+        $task->load('user');
+        return view('tasks::admin.show', compact('task'));
+    }
+
+    /**
+     * Show the form for editing the specified task
+     */
+    public function edit(Task $task)
+    {
+        $users = User::orderBy('name')->get();
+        return view('tasks::admin.edit', compact('task', 'users'));
+    }
+
+    /**
+     * Update the specified task
+     */
+    public function update(Request $request, Task $task)
+    {
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'user_id' => 'required|exists:users,id',
+            'due_date' => 'nullable|date',
+            'priority' => 'nullable|in:low,medium,high',
+            'status' => 'required|in:pending,completed',
+        ]);
+
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user_id,
+            'due_date' => $request->due_date,
+            'priority' => $request->priority ?? 'medium',
+            'status' => $request->status,
+        ]);
+
+        return redirect()->route('admin.tasks.index')
+            ->with('success', 'Task updated successfully.');
+    }
+
+    /**
+     * Remove the specified task
+     */
+    public function destroy(Task $task)
+    {
+        $task->delete();
+        return redirect()->route('admin.tasks.index')
+            ->with('success', 'Task deleted successfully.');
+    }
+
+    /**
      * Display all users with their total task counts
      */
     public function users()
